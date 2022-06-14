@@ -6,6 +6,18 @@ import zmail
 import requests
 import threading
 
+```
+@variable timeLimit 访问次数限制。
+@variable timer 计时器。
+@variable requestsHeader 请求头。目前是按照cookie进行登陆的，日后考虑更换为移动端api进行登陆。
+@variable cookie cookie
+@variable user 登陆邮箱的账号名
+@variable password 登陆邮箱的密码
+@variable theHost 邮箱服务器主机
+
+@instance theServer 连接邮箱实例
+@instance theRequestConn requests实例，用于发起GET请求获取通知内容与页面内容。
+```
 global timeLimit
 global timer
 timeLimit = 0
@@ -30,25 +42,25 @@ theServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_ho
 
 theRequestConn = requests.session()
 
-
+# 去除网页不必要内容，返回内容主体
 def getContent(oriDom: pq):
     oriDom("script").remove()
     oriDom("input").remove()
     oriDom("form").remove()
     return oriDom(".article")
 
-
+# 判断帖子是否存在多个页面
 def existMorePages(oriDom):
     if oriDom(".paginator").length > 0:
         return True
 
-
+# 在存在多个页面时调用，用于获取其他页面的链接
 def getSearchList(domTrees: pq):
     tempTrees = domTrees(".paginator")
     tempTrees("span").remove()
     return [ele.attr("href") for ele in tempTrees(".paginator")("a").items()]
 
-
+# 获取帖子内容，返回对应操作的dom实例
 def provideContent(url):
     try:
         html = theRequestConn.get(
@@ -73,7 +85,7 @@ def provideContent(url):
         print("["+getTime()+"]"+"error occur when trying getting all content")
         print(e)
 
-
+# 接收到通知时调用，用于获取被艾特的帖子的链接信息
 def getNotification():
     url = "https://www.douban.com/notification/"
     try:
@@ -93,7 +105,7 @@ def sendEmail(mailStruct):
         print("["+getTime()+"]"+"error occur when send mail")
         print("["+getTime()+"]"+e)
 
-
+# 处理通知，获取内容，并发送邮件
 def processNotification(content):
     allDom = pq(content)
     operDom = allDom(".item-req:first")
@@ -119,6 +131,7 @@ def processNotification(content):
 def getTime():
     return time.asctime(time.localtime(time.time()))
 
+# 清空次数限制。这并不是一个好的写法，但我没想太多。
 def limitClean():
     global timeLimit
     global timer
@@ -136,4 +149,5 @@ for msg in messages:
     if timeLimit > 10:
         print("["+getTime()+"]"+"由于次数限制，不作存档。")
         continue
+    # 其实我应该把它写成链式的，现在确实代码挺丑陋的
     getNotification()
