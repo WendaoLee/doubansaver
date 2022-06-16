@@ -6,18 +6,17 @@ import zmail
 import requests
 import threading
 
-```
-@variable timeLimit 访问次数限制。
-@variable timer 计时器。
-@variable requestsHeader 请求头。目前是按照cookie进行登陆的，日后考虑更换为移动端api进行登陆。
-@variable cookie cookie
-@variable user 登陆邮箱的账号名
-@variable password 登陆邮箱的密码
-@variable theHost 邮箱服务器主机
 
-@instance theServer 连接邮箱实例
-@instance theRequestConn requests实例，用于发起GET请求获取通知内容与页面内容。
-```
+# @variable timeLimit 访问次数限制。
+# @variable timer 计时器。
+# @variable requestsHeader 请求头。目前是按照cookie进行登陆的，日后考虑更换为移动端api进行登陆。
+# @variable cookie cookie
+# @variable user 登陆邮箱的账号名
+# @variable password 登陆邮箱的密码
+# @variable theHost 邮箱服务器主机
+# @instance theServer 连接邮箱实例
+# @instance theRequestConn requests实例，用于发起GET请求获取通知内容与页面内容。
+
 global timeLimit
 global timer
 timeLimit = 0
