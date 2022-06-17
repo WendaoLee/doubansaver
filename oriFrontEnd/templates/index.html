@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+
+<body>
+    <h1>豆瓣枝江存档站</h1>
+    <span>Version:AvaShip0.1</span>
+    <br>
+    <b>向晚号，启航！！！🥰</b>
+    <br>
+    <b>主站上次更新时间：{{updateTime}}</b>
+    <br>
+    <br>
+    <i>这是突发奇想花了一天现学撸出来的网站，样式什么的短期内就别指望啦~</i>
+    <br>
+    <i>内容转发至自己邮箱的功能在解决了中继邮箱的问题后便会上线</i>
+    <hr>
+    <br>
+    <h2>搜索</h2>
+    <i>请搜索帖名/帖id/发帖人名字（是他当时发帖的名字而不是账户id）</i>
+    <br>
+    <script>
+        function gotoNewPage(){
+            let dom = document.getElementById("content")
+            let value = dom.value
+            window.location.href= ("./search/"+value)
+        }
+    </script>
+    <input id="content" type="text" style="width: 400px;height:20px"/><button onclick="gotoNewPage()">点击即可搜索</button>
+    <br>
+    <h2>最近备份</h2>
+    <br>
+    {{list}}
+</body>
