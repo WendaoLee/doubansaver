@@ -5,15 +5,12 @@
 
 如果您有兴趣，欢迎fork或提交PR。
 
-目录：
-
-[TOC]
 
 ## 目录说明
 
 ```
 --------
-├── API				 后端源码以及API文档。
+├── API	             后端源码以及API文档。
 |	├── flask.py	 使用flask编写的前端源码。
 |	└── README.md	 API文档。
 ├── oriFrontEnd		 目前使用的简陋的前端源码。该部分前后端不分离。
