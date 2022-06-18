@@ -19,6 +19,7 @@ class KEY:
 
 def fuc_getINFOQUEUE():
     global INFOQUEUE
+    INFOQUEUE.clear()
     theMailSum = mailServer.stat()[0]
     mails = mailServer.get_mails(start_index=theMailSum-10,end_index=theMailSum)
     for ele in mails:
