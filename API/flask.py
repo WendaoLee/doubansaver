@@ -20,6 +20,8 @@ class KEY:
 def fuc_getINFOQUEUE():
     global INFOQUEUE
     INFOQUEUE.clear()
+    mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+                pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
     theMailSum = mailServer.stat()[0]
     mails = mailServer.get_mails(start_index=theMailSum-10,end_index=theMailSum)
     for ele in mails:
@@ -41,19 +43,15 @@ def fuc_getObject():
         "author":"null"
     }
 
-def fuc_freshInstance():
-    global mailServer
-    if mailServer is None:
-        mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
-                   pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
-    else:
-        del mailServer
-        mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
-                   pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
-    
-def fuc_timeCycle():
-    fuc_freshInstance()
-    Timer(60*60,fuc_timeCycle).start()
+# def fuc_freshInstance():
+#     global mailServer
+#     if mailServer is None:
+#         mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+#                    pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
+#     else:
+#         del mailServer
+#         mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+#                    pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False) 
 
 def state_timeCycle():
     fuc_getINFOQUEUE()
@@ -63,12 +61,9 @@ user = ""
 password = ""
 theHost = ""
 
-mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
-                   pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
-
 app = Flask(__name__)
+
 state_timeCycle()
-fuc_timeCycle()
 
 @app.route('/api/getLatest',methods=['GET'])
 def getLatest():
@@ -77,13 +72,15 @@ def getLatest():
 
 @app.route('/api/getmailInfo/<mailkey>',methods=['GET'])
 def getmailByKey(mailkey):
-    global mailServer
+    mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+                   pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
     content = mailServer.get_mail(mailkey)
     return jsonify(str(content['content_html']).replace('\\n',''))
 
 @app.route('/api/search/<searchkey>',methods=['GET'])
 def searchKey(searchkey):
-    global mailServer
+    mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+                   pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
     thelist = mailServer.get_mails(subject=searchkey)
     resultsList = []
     for ele in thelist:

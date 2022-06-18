@@ -6,14 +6,13 @@ import time
 import threading
 
 global theNameList, theSortedIdList,theDateList
-global mailServer, theMailSum
+global theMailSum
 global theUpdateTime
 
 theNameList = []
 theSortedIdList = []
 theDateList = []
 theUpdateTime = time.asctime(time.localtime(time.time()))
-
 user = ""
 password = ""
 theHost = ""
@@ -21,15 +20,17 @@ theHost = ""
 mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
                    pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
 theMailSum = mailServer.stat()[0]
+del mailServer
 
 def updateLatest():
-    global mailServer
     global theMailSum
     global theNameList
     global theSortedIdList
     global theDateList
     global theUpdateTime
 
+    mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+                   pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
     print("周期更新 in " + time.asctime(time.localtime(time.time())))
 
     theMailSum = mailServer.stat()[0]
@@ -70,13 +71,15 @@ def index():
 
 @app.route('/mail/<mailkey>')
 def getMail(mailkey):
-    global mailServer
+    mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+                   pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
     content = mailServer.get_mail(mailkey)
     return render_template("mail.html",content=Markup(str(content['content_html']).replace('\\n','')),header=content['subject'],date=content['date'],id=content['id'])
 
 @app.route('/search/<searchkey>')
 def test(searchkey):
-    global mailServer
+    mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+                pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
     thelist = mailServer.get_mails(subject=searchkey)
     theHtml = "<ul>"
     item = ""
