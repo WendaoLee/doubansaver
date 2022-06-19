@@ -29,25 +29,30 @@ def updateLatest():
     global theDateList
     global theUpdateTime
 
-    mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+    try:
+        mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
                    pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
-    print("周期更新 in " + time.asctime(time.localtime(time.time())))
+        print("周期更新 in " + time.asctime(time.localtime(time.time())))
 
-    theMailSum = mailServer.stat()[0]
-    tempNameList = []
-    tempSortedList = []
-    tempDateList = []
+        theMailSum = mailServer.stat()[0]
+        tempNameList = []
+        tempSortedList = []
+        tempDateList = []
 
-    temp = mailServer.get_mails(start_index=theMailSum-10,end_index=theMailSum)
-    for ele in temp:
-        tempNameList.append(ele['subject'])
-        tempSortedList.append(ele['id'])
-        tempDateList.append(ele['date'])
-    theNameList = tempNameList
-    theSortedIdList = tempSortedList
-    theDateList = tempDateList
-    theUpdateTime = time.asctime(time.localtime(time.time()))
-    threading.Timer(120.0,updateLatest).start()
+        temp = mailServer.get_mails(start_index=theMailSum-10,end_index=theMailSum)
+        for ele in temp:
+            tempNameList.append(ele['subject'])
+            tempSortedList.append(ele['id'])
+            tempDateList.append(ele['date'])
+        theNameList = tempNameList
+        theSortedIdList = tempSortedList
+        theDateList = tempDateList
+        theUpdateTime = time.asctime(time.localtime(time.time()))
+    except Exception as e:
+        print("Error occurs in " + time.asctime(time.localtime(time.time())))
+        print(e)
+    finally:
+        threading.Timer(120.0,updateLatest).start()
 
 updateLatest()
 
