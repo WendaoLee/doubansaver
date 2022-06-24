@@ -76,20 +76,30 @@ def index():
 
 @app.route('/mail/<mailkey>')
 def getMail(mailkey):
-    mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+    try:
+        mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
                    pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
-    content = mailServer.get_mail(mailkey)
-    return render_template("mail.html",content=Markup(str(content['content_html']).replace('\\n','')),header=content['subject'],date=content['date'],id=content['id'])
+        content = mailServer.get_mail(mailkey)
+        return render_template("mail.html",content=Markup(str(content['content_html']).replace('\\n','')),header=content['subject'],date=content['date'],id=content['id'])
+    except Exception as e:
+        print("Error occurs in " + time.asctime(time.localtime(time.time())))
+        print(e)
+        
 
 @app.route('/search/<searchkey>')
 def test(searchkey):
-    mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
+    try:
+        mailServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
                 pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
-    thelist = mailServer.get_mails(subject=searchkey)
-    theHtml = "<ul>"
-    item = ""
-    for ele in thelist:
-        item = "<li>" + str(ele['date']) + "--" + "<a href='../mail/" + str(ele['id']) +"'>" + ele['subject'] + "</a></li>"
-        theHtml = theHtml + item
-    theHtml = theHtml + "</ul>"
-    return render_template("searchList.html",searchkey=searchkey,thehtml=Markup(theHtml))
+        thelist = mailServer.get_mails(subject=searchkey)
+        theHtml = "<ul>"
+        item = ""
+        for ele in thelist:
+            item = "<li>" + str(ele['date']) + "--" + "<a href='../mail/" + str(ele['id']) +"'>" + ele['subject'] + "</a></li>"
+            theHtml = theHtml + item
+        theHtml = theHtml + "</ul>"
+        return render_template("searchList.html",searchkey=searchkey,thehtml=Markup(theHtml))
+    except Exception as e:
+        print("Error occurs in " + time.asctime(time.localtime(time.time())))
+        print(e)
+ 
