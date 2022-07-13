@@ -36,6 +36,7 @@ user = ""
 password = ""
 theHost = ""
 
+# smtp_port在个别云服务器上要更改
 theServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
                          pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
 
@@ -97,7 +98,6 @@ def getNotification():
 
 def sendEmail(mailStruct):
     try:
-        print(mailStruct)
         theServer.send_mail("ava@mail.otterdaily.cn",mailStruct)
         
     except Exception as e:
@@ -125,7 +125,15 @@ def processNotification(content):
             print("["+getTime()+"]"+e)
     else:
         print("["+getTime()+"]"+"not a @")
+        if len(operDom.text()) is 0:
+            print("["+getTime()+"]"+"query is null")
+            func_writeProcessLog(allDom.text())
 
+def func_writeProcessLog(content):
+    with open("log.txt","a",encoding="utf-8") as file:
+        file.write("["+getTime()+"]Not a @'s dom-content")
+        file.write(content)
+        file.close()
 
 def getTime():
     return time.asctime(time.localtime(time.time()))
@@ -141,12 +149,16 @@ def limitClean():
 
 
 limitClean()
-sendUrl = ""
-messages = SSEClient(sendUrl)
-for msg in messages:
-    print("["+getTime()+"]"+"检测到新消息")
-    if timeLimit > 10:
-        print("["+getTime()+"]"+"由于次数限制，不作存档。")
-        continue
-    # 其实我应该把它写成链式的，现在确实代码挺丑陋的
-    getNotification()
+try:
+    sendUrl = ""
+    messages = SSEClient(sendUrl)
+    for msg in messages:
+        print("["+getTime()+"]"+"检测到新消息")
+        if timeLimit > 10:
+            print("["+getTime()+"]"+"由于次数限制，不作存档。")
+            continue
+        # 其实我应该把它写成链式的，现在确实代码挺丑陋的
+        getNotification()
+except Exception as e:
+    print("ERROR:"+e)
+    
