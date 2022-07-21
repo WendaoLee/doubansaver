@@ -31,6 +31,14 @@ host:mail.otterdaily.cn
 //这个邮箱限制内存大小为100MB.
 ```
 
+**需要注意的是**，由于测试服务器的云服务厂商的规则限制，默认的smtp端口25是被禁用的。如果您想使用测试邮箱在本地测试，在发生一些错误时，您应该尝试更换smtp端口为587。即：
+
+```python
+# 注意smtp_port参数
+theServer = zmail.server(user, password, smtp_host=theHost, smtp_port=587, pop_host=theHost,
+                         pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
+```
+
 ## 使用说明
 
 在**豆瓣小组**的帖子下艾特枝江存档姬（id:**asoul_abcde**），她将帖子当前内容以**邮件**的形式备份到[存档站](http://asoul.otterdaily.cn:9900)上。
