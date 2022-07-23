@@ -77,6 +77,7 @@ def fuc_getObject():
         "author": "null"
     }
 
+
 app = Flask(__name__)
 
 fuc_updateLatest()
@@ -107,6 +108,7 @@ def searchKey(searchkey):
             "title": "null"
         }
         ob[KEY.ID] = ele['id']
+        ob[KEY.TITLE] = ele['subject']
         resultsList.append(ob)
     resultsList.reverse()
     return jsonify(str(resultsList))
