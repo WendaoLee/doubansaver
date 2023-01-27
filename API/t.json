@@ -1,0 +1,14 @@
+{
+    "title": "集中楼xxxx",
+    "author": "xxx",
+    "content": "xxxx",
+    "reply": [
+        {
+            "author":"reply one's name",
+            "avatar":"https://douban.....头像的链接",
+            "profile":"https://....主页链接",
+            "content":"reply content",
+            "time":"reply time"
+        }
+    ]
+}

@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="ua-windows ua-webkit">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="referrer" content="always">
+    <meta name="google-site-verification" content="ok0wCgT20tBBgo9_zat2iAcimtN4Ftf5ccsh092Xeyw" />
+    <title>
+我的提醒
+</title>
+    
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="Sun, 6 Mar 2005 01:00:00 GMT">
+    
+    <script >var _head_start = new Date();</script>
+    <script src="https://img3.doubanio.com/f/shire/72ced6df41d4d158420cebdd254f9562942464e3/js/jquery.min.js"></script>
+    <script src="https://img3.doubanio.com/f/shire/4888ee2fda6812f70a064a51c93b84fde8e4a3c2/js/douban.js"></script>
+    <link href="https://img3.doubanio.com/f/shire/204847ecc7d679de915c283531d14f16cfbee65e/css/douban.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+    
+        
+.grid-16-8 .article{width:720px}.grid-16-8 .aside{width:180px}.notify input{margin:0}h1{width:720px;padding-bottom:12px;border-bottom:1px solid #aaa;margin:0}.head-nav{display:inline-block;zoom:1;margin-left:20px;font-weight:300;font-size:12px;white-space:nowrap;overflow:hidden;line-height:1.3;color:#999}.head-nav .dot{margin:0 4px}.head-nav .on:link,.head-nav .on:visited,.head-nav .on:hover,.head-nav .on:active{color:#111;background-color:transparent}.head-nav a:link,.head-nav a:visited,.head-nav a:hover,.head-nav a:active{color:#999}.head-nav a:hover,.head-nav a:active{color:#fff}.item-req{position:relative;overflow:hidden;zoom:1;padding:12px 15px;border-bottom:1px solid #f0f0f0}.item-req .pic{float:left;width:42px;text-align:center}.item-req .pic img{width:24px}.item-req .content{overflow:hidden;zoom:1;width:70%;color:#3e3e3e}.item-req .ops{position:absolute;right:12px;top:12px;color:#aaa}.item-req .ops a:link,.item-req .ops a:visited{color:#aaa}.item-req .ops a:hover,.item-req .ops a:active{background-color:#aaa;color:#fff}.item-req .quote .inq{color:#999}.only-result .content{display:none}.only-result .ops{position:static;text-align:right}.req-stat.unread{background-color:#fffce7;border-bottom:1px solid #f0f0f0;text-align:center}.unread{background-color:#fffce7}.req-stat{color:#3e3e3e;padding:4px 12px;background-color:#f6f6f6}.req-stat b{margin:0 4px}.req-stat .a_ignore_all,.req-stat .req-text{white-space:nowrap}.req-hd{padding:12px}.abstract{overflow:hidden;zoom:1;padding-top:10px;margin:0 0 26px 26px}.abstract .abstract-pic{float:left;margin-right:8px}.abstract .abstract-pic img{width:48px}.abstract .abstract-content{overflow:hidden;zoom:1}.abstract .abstract-content p{color:#3e3e3e;margin:0}.notify-silence{padding:100px;text-align:center;font-size:18px;color:#ccc;-webkit-font-smoothing:antialiased}.desktop-notification-setting{display:inline-block;zoom:1;font-size:12px;font-weight:normal;float:right;margin-top:10px;position:relative}.desktop-notification-setting s{position:absolute;top:2px;width:17px;height:12px;background:url(https://img3.doubanio.com/f/sns/71a3d0661dce65b7f685dd5fb9421476d0728eab/pics/new_menu_top.gif) no-repeat 0 0}
+
+
+    </style>
+    
+    <style type="text/css">
+    #db-nav-sns .nav-primary{width:1040px}#wrapper{width:1040px}#wrapper .grid-16-8 .article{width:675px}#wrapper .grid-16-8 .aside{width:300px}@media (max-width: 1024px){body{width:1024px}body .grid-16-8 .article{padding-right:25px}#wrapper{width:1000px}[id^=dale_]{max-width:1000px}body #db-nav-sns .nav-primary{width:1000px}body #db-global-nav,body .nav{min-width:1024px}}html body,html td,html th,html input,html .pl{font-size:13px}html .pl2{font-size:14px}html h3{font-size:15px}html h2{font-size:16px}html h1{font-size:26px}.ob,.obu{width:75px}.ob dt .m_sub_img{width:48px}.ob dd{height:58px}.obu dd{word-wrap:break-word;word-break:normal}.xbar{background-repeat:repeat-x}.photo_wrap{width:200px;margin:10px 12.5px 25px}.photo_wrap img{max-width:100%;max-height:200px}.dui-dialog .bd{font-size:13px}.paginator{font-size:15px}
+
+  </style>
+    <script>
+;(function() {
+var old_noti_form_init = Douban.init_noti_form;
+Douban.init_noti_form = function(form) {
+  old_noti_form_init(form);
+ $(form).submit(function(e){
+   $(this).closest('.item-req').addClass('only-result').removeClass('unread');
+ });
+};
+
+Douban.init_delete_reply_notify=function(b){var a=function(h){h.preventDefault();var d=$(h.target);var i=d[0].href.split("#")[1];var c=(window.DOUBAN_SITE_URL||"")+"/j/reply_notify/remove_notify?id="+i;$.ajax({url:c,dataType:"jsonp"});var f=d.closest(".item-req");if($.contains($(".top-nav-reminder")[0],f[0])){f=f.parent();var g=f.siblings().length;f.fadeOut(function(){f.remove()});if(g===0){f.closest(".bd").find(".no-new-notis").show()}}else{f.fadeOut()}};if(b.type==="click"){a(b)}else{$(b).click(a)}};
+
+Douban.init_discard_notify=function(b){var a=function(i){i.preventDefault();var c=(window.DOUBAN_SITE_URL||"")+"/j/notification/discard";var f=$(i.target);var d=f[0].name;$.get(c,{id:d,ck:get_cookie("ck")},function(e){},"jsonp");var g=f.closest(".item-req");if($.contains($(".top-nav-reminder")[0],g[0])){g=g.parent();var h=g.siblings().length;g.fadeOut(function(){g.remove()});if(h===0){g.closest(".bd").find(".no-new-notis").show()}}else{g.fadeOut()}};if(b.type==="click"){a(b)}else{$(b).click(a)}};
+
+Douban.init_ignore_all = function(lnk) {
+$(lnk).click(function(e) {
+  e.preventDefault();
+ $.post_withck('/j/request/ignore_all', function() {
+   self.location.replace(self.location.href);
+});
+});
+};
+})();
+
+Do(function(){
+
+    if (!window.Notification) {
+        return;
+    } else {
+        var is_enabled = get_cookie('enable_push_desktop_noty');
+        if (is_enabled == '1') {
+            $('#desktop-notification-setting-btn').attr('checked', true);
+        }
+        $('.desktop-notification-setting').show();
+    }
+
+    $('#desktop-notification-setting-btn').click(function() {
+        var $this = $(this);
+        var is_checked = $this.attr('checked');
+
+        if (!is_checked) {
+            updateSetting(false);
+            return;
+        }
+
+        Notification.requestPermission(function(permission) {
+            if (permission == 'denied') {
+                alert('哎呀，开启桌面提醒的请求被拒绝了，可以去浏览器的设置中重新启用');
+                updateSetting(false);
+                $this.attr('checked', false);
+            } else {
+                updateSetting(true);
+            }
+        });
+
+    });
+
+    function updateSetting(is_enabled) {
+        set_cookie({
+            enable_push_desktop_noty: (is_enabled ? '1' : '0')
+        });
+    }
+
+});
+
+</script>
+
+    <link rel="shortcut icon" href="https://img3.doubanio.com/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  
+  
+    <script type="text/javascript">var _body_start = new Date();</script>
+    
+  
+
+
+
+    <link href="//img3.doubanio.com/dae/accounts/resources/3e96b44/shire/bundle.css" rel="stylesheet" type="text/css">
+
+
+
+<div id="db-global-nav" class="global-nav">
+  <div class="bd">
+    
+<div class="top-nav-info">
+  <ul>
+    <li>
+    <a id="top-nav-doumail-link" href="https://www.douban.com/doumail/">豆邮</a>
+    </li>
+    <li class="nav-user-account">
+      <a target="_blank" href="https://accounts.douban.com/passport/setting/" class="bn-more">
+        <span>存档姬（李问道的帐号</span><span class="arrow"></span>
+      </a>
+      <div class="more-items">
+        <table cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td>
+                <a href="https://www.douban.com/mine/">个人主页</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a target="_blank" href="https://www.douban.com/mine/orders/">我的订单</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a target="_blank" href="https://www.douban.com/mine/wallet/">我的钱包</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a target="_blank" href="https://accounts.douban.com/passport/setting/">帐号管理</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://www.douban.com/accounts/logout?source=main&ck=d2dJ">退出</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </li>
+  </ul>
+</div>
+
+  <div class="top-nav-reminder">
+    <a href="https://www.douban.com/notification/" class="lnk-remind">提醒</a>
+    <div id="top-nav-notimenu" class="more-items">
+      <div class="bd">
+        <p>加载中...</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="top-nav-doubanapp">
+  <a href="https://www.douban.com/doubanapp/app?channel=top-nav" class="lnk-doubanapp">下载豆瓣客户端</a>
+  <div id="doubanapp-tip">
+    <a href="https://www.douban.com/doubanapp/app?channel=qipao" class="tip-link">豆瓣 <span class="version">6.0</span> 全新发布</a>
+    <a href="javascript: void 0;" class="tip-close">×</a>
+  </div>
+  <div id="top-nav-appintro" class="more-items">
+    <p class="appintro-title">豆瓣</p>
+    <p class="qrcode">扫码直接下载</p>
+    <div class="download">
+      <a href="https://www.douban.com/doubanapp/redirect?channel=top-nav&direct_dl=1&download=iOS">iPhone</a>
+      <span>·</span>
+      <a href="https://www.douban.com/doubanapp/redirect?channel=top-nav&direct_dl=1&download=Android" class="download-android">Android</a>
+    </div>
+  </div>
+</div>
+
+    
+
+
+<div class="global-nav-items">
+  <ul>
+    <li class="on">
+      <a href="https://www.douban.com"  data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-main&quot;,&quot;uid&quot;:&quot;229488397&quot;}">豆瓣</a>
+    </li>
+    <li class="">
+      <a href="https://book.douban.com" target="_blank" data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-book&quot;,&quot;uid&quot;:&quot;229488397&quot;}">读书</a>
+    </li>
+    <li class="">
+      <a href="https://movie.douban.com" target="_blank" data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-movie&quot;,&quot;uid&quot;:&quot;229488397&quot;}">电影</a>
+    </li>
+    <li class="">
+      <a href="https://music.douban.com" target="_blank" data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-music&quot;,&quot;uid&quot;:&quot;229488397&quot;}">音乐</a>
+    </li>
+    <li class="">
+      <a href="https://www.douban.com/location" target="_blank" data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-location&quot;,&quot;uid&quot;:&quot;229488397&quot;}">同城</a>
+    </li>
+    <li class="">
+      <a href="https://www.douban.com/group" target="_blank" data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-group&quot;,&quot;uid&quot;:&quot;229488397&quot;}">小组</a>
+    </li>
+    <li class="">
+      <a href="https://read.douban.com&#47;?dcs=top-nav&amp;dcm=douban" target="_blank" data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-read&quot;,&quot;uid&quot;:&quot;229488397&quot;}">阅读</a>
+    </li>
+    <li class="">
+      <a href="https://douban.fm&#47;?from_=shire_top_nav" target="_blank" data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-fm&quot;,&quot;uid&quot;:&quot;229488397&quot;}">FM</a>
+    </li>
+    <li class="">
+      <a href="https://time.douban.com&#47;?dt_time_source=douban-web_top_nav" target="_blank" data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-time&quot;,&quot;uid&quot;:&quot;229488397&quot;}">时间</a>
+    </li>
+    <li class="">
+      <a href="https://market.douban.com&#47;?utm_campaign=douban_top_nav&amp;utm_source=douban&amp;utm_medium=pc_web" target="_blank" data-moreurl-dict="{&quot;from&quot;:&quot;top-nav-click-market&quot;,&quot;uid&quot;:&quot;229488397&quot;}">豆品</a>
+    </li>
+  </ul>
+</div>
+
+  </div>
+</div>
+<script>
+  ;window._GLOBAL_NAV = {
+    USER_ID: "229488397",
+    UPLOAD_AUTH_TOKEN: "229488397:39e671581e8175459caebcfb10504d645736dd5c",
+    SSE_TOKEN: "3014d3b6431315f606e83162b77009d2e21deef4",
+    SSE_TIMESTAMP: "1666064496",
+    DOUBAN_URL: "https://www.douban.com",
+    N_NEW_NOTIS: 0,
+    N_NEW_DOUMAIL: 0
+  };
+</script>
+
+
+
+    <script src="//img3.doubanio.com/dae/accounts/resources/3e96b44/shire/bundle.js" defer="defer"></script>
+
+
+
+
+  
+
+
+
+    <link href="//img3.doubanio.com/dae/accounts/resources/3e96b44/sns/bundle.css" rel="stylesheet" type="text/css">
+
+
+
+<div id="db-nav-sns" class="nav">
+  <div class="nav-wrap">
+    <div class="nav-primary">
+     
+      <div class="nav-logo">
+        <a href="https://www.douban.com">豆瓣社区</a>
+      </div>
+
+      <div class="nav-search">
+  <form action="https://www.douban.com/search" method="get">
+	<fieldset>
+      <legend>搜索：</legend>
+	  <label for="inp-query">搜索你感兴趣的内容和人...</label>
+	  <div class="inp">
+	    <input type="hidden" name="source" value="suggest">
+		<input id="inp-query" name="q" size="22" maxlength="60" autocomplete="off" value="">
+	  </div>
+	  <div class="inp-btn"><input type="submit" value="搜索"></div>
+	</fieldset>
+  </form>
+</div>
+
+      
+
+<div class="nav-items">
+  <ul>
+    <li><a href="https://www.douban.com">首页</a></li>
+	<li><a href="https://www.douban.com/mine/">我的豆瓣</a></li>
+      <li>
+        <a href="https://www.douban.com/explore">
+          浏览发现
+        </a>
+      </li>
+      <li>
+        <a href="https://www.douban.com/gallery">
+          话题广场
+          <img src="https://img3.doubanio.com/f/shire/e49eca1517424a941871a2667a8957fd6c72d632/pics/new_menu.gif" alt="new" style="position: absolute; top: -7px; right: -13px;" />
+        </a>
+      </li>
+  </ul>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+    <script src="//img3.doubanio.com/dae/accounts/resources/3e96b44/sns/bundle.js" defer="defer"></script>
+
+
+
+
+
+    <div id="wrapper">
+        
+
+        
+<div id="content">
+    
+    <h1>我的提醒
+<div class="head-nav">
+    <a href="/notification/" class=on>全部</a>
+    <span class="dot">&middot;</span> <a href="/request/" >请求</a>
+    <span class="dot">&middot;</span> <a href="/reply_notify/" >回应过的</a>
+</div>
+<div class="desktop-notification-setting" style="display:none">
+    <input type="checkbox" id="desktop-notification-setting-btn">
+    <label for="desktop-notification-setting-btn">开启桌面通知&nbsp;<s class="icon-new"></s></label>
+</div></h1>
+
+    <div class="grid-16-8 clearfix">
+        
+        
+        <div class="article">
+               
+  
+
+
+    <div class="notification-list">
+    
+
+
+    
+        
+            
+            <div id="reply_notify_10220234783" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276871935/?start=0" target="_blank">上课太无聊随便搜搜，结果看...</a> 有了1条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10220234783">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10220229838" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276871935/?start=0#4875664296" target="_blank">上课太无聊随便搜搜，结果看...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10220076698" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276871935/?start=0" target="_blank">上课太无聊随便搜搜，结果看...</a> 有了4条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10220076698">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10220023581" class="item-req ">
+                <div class="content">
+                    nameaningless 收藏了你的小组讨论 <a href="https://www.douban.com/group/topic/276871935/">上课太无聊随便搜搜，结果看...</a> 到豆列 <a href="https://www.douban.com/doulist/146740769/">网络观察室</a>
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10220023581">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10219940767" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276871935/?start=0#4875557709" target="_blank">上课太无聊随便搜搜，结果看...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10219934849" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276871935/?start=0" target="_blank">上课太无聊随便搜搜，结果看...</a> 有了1条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10219934849">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10219906582" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276871935/?start=0" target="_blank">上课太无聊随便搜搜，结果看...</a> 有了1条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10219906582">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10219896696" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276871935/?start=0" target="_blank">上课太无聊随便搜搜，结果看...</a> 有了3条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10219896696">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10219886475" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276871935/?start=0" target="_blank">上课太无聊随便搜搜，结果看...</a> 有了2条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10219886475">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10216658027" class="item-req ">
+                <div class="content">
+                    <a href="https://www.douban.com/group/65539/" target="_blank">伪asoul讨论组小组</a> 的管理员通过了你的请求，你现在加入了该小组并可以发言了
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10216426178" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276423355/?start=0" target="_blank">复杂topic test</a> 有了1条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10216426178">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10216283212" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276423355/?start=0" target="_blank">复杂topic test</a> 有了1条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10216283212">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10214119873" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/273565435/?start=0#4873775910" target="_blank">打牌了😁😁知名豆瓣魂组...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10213981473" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/273565435/?start=0#4873718267" target="_blank">打牌了😁😁知名豆瓣魂组...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10209665372" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276706988/?start=0#4872298236" target="_blank">魂组踢封警告公示楼（2022下...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10209457024" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276706988/?start=0#4872221197" target="_blank">魂组踢封警告公示楼（2022下...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10209402717" class="item-req ">
+                <div class="content">
+                    你在讨论 <a href="https://www.douban.com/group/topic/276706988/?start=0#4871977799" target="_blank">魂组踢封警告公示楼（2022下...</a> 的回应有了1次赞
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10209402717">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10209002195" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276706988/?start=0#4872053599" target="_blank">魂组踢封警告公示楼（2022下...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10208820389" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276706988/?start=0" target="_blank">魂组踢封警告公示楼（2022下...</a> 有了1条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10208820389">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10208803881" class="item-req ">
+                <div class="content">
+                    你的小组讨论 <a href="https://www.douban.com/group/topic/276706988/">魂组踢封警告公示楼（2022下...</a> 被设置为精华讨论
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10208308191" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276423730/?start=0" target="_blank">404s，茉莉蜜茶、茉莉柚茶、...</a> 有了1条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10208308191">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10208276174" class="item-req ">
+                <div class="content">
+                    你发表的小组讨论 <a href="https://www.douban.com/group/topic/276423730/?start=0" target="_blank">404s，茉莉蜜茶、茉莉柚茶、...</a> 有了1条新回复
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10208276174">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10206321294" class="item-req ">
+                <div class="content">
+                    你在讨论 <a href="https://www.douban.com/group/topic/276670463/?start=0#4871204960" target="_blank">有个好朋友真好🥰</a> 的回应有了4次赞
+                </div>
+                <div class="ops">
+                  <a class="discard j a_discard_notify" name="10206321294">不再提醒</a>
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10206583478" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276675253/?start=0#4871308951" target="_blank">冷出，我c n m！还我号来！</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10206583348" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276675253/?start=0#4871308892" target="_blank">冷出，我c n m！还我号来！</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10206573169" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276675253/?start=0#4871303802" target="_blank">冷出，我c n m！还我号来！</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10202282327" class="item-req ">
+                <div class="content">
+                    <a href="https://www.douban.com/group/734219/" target="_blank">原神</a> 的管理员退回了你邀请 <a href="https://www.douban.com/people/263039901/">Erika</a> 加入Club的请求，理由: 旅行者，请阅读置顶组规后，填写暗号申请。
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10201362017" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276345154/?start=300#4869581958" target="_blank">Ti11突围赛 对于cn已经结束了...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10199223181" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276540783/?start=0#4868928786" target="_blank">xg vg两个废物（草，两个队都...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10198981048" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276345154/?start=300#4868840980" target="_blank">Ti11突围赛 对于cn已经结束了...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10198971172" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276345154/?start=300#4868838908" target="_blank">Ti11突围赛 对于cn已经结束了...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10198530521" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276345154/?start=300#4868674637" target="_blank">Ti11突围赛 对于cn已经结束了...</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10198245242" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/276537824/?start=0#4868576692" target="_blank">有人看过塔希里亚故事集吗</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10197582566" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/275953272/?start=0#4868332429" target="_blank">10月吐槽楼</a> 的评论有了1条新的回应
+                </div>
+            </div>
+        
+            
+            <div id="reply_notify_10197037799" class="item-req ">
+                <div class="content">
+                    小组讨论 <a href="https://www.douban.com/group/topic/275953272/?start=0#4868151334" target="_blank">10月吐槽楼</a> 的评论有了1条新的回应
+                </div>
+            </div>
+
+    </div>
+
+
+    
+
+        </div>
+        <div class="aside">
+                
+
+        </div>
+        <div class="extra">
+            
+        </div>
+    </div>
+</div>
+
+        
+<div id="footer">
+    
+<span id="icp" class="fleft gray-link">
+    &copy; 2005－2022 douban.com, all rights reserved 北京豆网科技有限公司
+</span>
+
+<a href="https://www.douban.com/hnypt/variformcyst.py" style="display: none;"></a>
+
+<span class="fright">
+    <a href="https://www.douban.com/about">关于豆瓣</a>
+    · <a href="https://www.douban.com/jobs">在豆瓣工作</a>
+    · <a href="https://www.douban.com/about?topic=contactus">联系我们</a>
+    · <a href="https://www.douban.com/about/legal">法律声明</a>
+    
+    · <a href="https://help.douban.com/?app=main" target="_blank">帮助中心</a>
+    · <a href="https://www.douban.com/doubanapp/">移动应用</a>
+    · <a href="https://www.douban.com/partner/">豆瓣广告</a>
+</span>
+
+</div>
+
+    </div>
+    
+
+    <!-- COLLECTED JS -->
+    
+    
+    
+
+
+
+
+
+
+
+
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5WP579" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5WP579');</script>
+<!-- End Google Tag Manager -->
+
+
+<script type="text/javascript">
+var _paq = _paq || [];
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
+(function() {
+    var p=(('https:' == document.location.protocol) ? 'https' : 'http'), u=p+'://fundin.douban.com/';
+    _paq.push(['setTrackerUrl', u+'piwik']);
+    _paq.push(['setSiteId', '100001']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript';
+    g.defer=true;
+    g.async=true;
+    g.src=p+'://img3.doubanio.com/dae/fundin/piwik.js';
+    s.parentNode.insertBefore(g,s);
+})();
+</script>
+
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-7019765-1']);
+_gaq.push(['_setCampNameKey', 'dcn']);
+_gaq.push(['_setCampSourceKey', 'dcs']);
+_gaq.push(['_setCampMediumKey', 'dcm']);
+_gaq.push(['_setCampTermKey', 'dct']);
+_gaq.push(['_setCampContentKey', 'dcc']);
+_gaq.push(['_addOrganic', 'baidu', 'word']);
+_gaq.push(['_addOrganic', 'soso', 'w']);
+_gaq.push(['_addOrganic', '3721', 'name']);
+_gaq.push(['_addOrganic', 'youdao', 'q']);
+_gaq.push(['_addOrganic', 'so.360.cn', 'q']);
+_gaq.push(['_addOrganic', 'vnet', 'kw']);
+_gaq.push(['_addOrganic', 'sogou', 'query']);
+_gaq.push(['_addIgnoredOrganic', '豆瓣']);
+_gaq.push(['_addIgnoredOrganic', 'douban']);
+_gaq.push(['_addIgnoredOrganic', '豆瓣网']);
+_gaq.push(['_addIgnoredOrganic', 'www.douban.com']);
+_gaq.push(['_setDomainName', '.douban.com']);
+
+
+    _gaq.push(['_setCustomVar', 1, 'responsive_view_mode', 'desktop', 3]);
+
+_gaq.push(['_trackPageview']);
+_gaq.push(['_trackPageLoadTime']);
+    _gaq.push(['_setVar', '22948']);
+
+window._ga_init = function() {
+    var ga = document.createElement('script');
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    ga.setAttribute('async', 'true');
+    document.documentElement.firstChild.appendChild(ga);
+};
+if (window.addEventListener) {
+    window.addEventListener('load', _ga_init, false);
+} else {
+    window.attachEvent('onload', _ga_init);
+}
+</script>
+
+
+
+
+
+    <!-- dae-web-sns--notification-cbc95b4f7-kk2rd-->
+
+  
+
+  <script>_SPLITTEST=''</script>
+</body>
+
+</html>
+
+

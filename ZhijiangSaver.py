@@ -4,7 +4,7 @@ from pyquery import PyQuery as pq
 import time,random
 import zmail
 import requests
-import threading
+import threading 
 
 
 # @variable timeLimit 访问次数限制。
@@ -29,15 +29,8 @@ requestsHeaders = {
 }
 
 cookie = {
-    'cookie': r''
+    'cookie': r'll="118172"; bid=4_9Vn3iZ1pw; __yadk_uid=Ikn5yiZvj0Fr3ZR2EQSX8ZC8G6YrnFRG; douban-fav-remind=1; gr_user_id=12375f91-6d72-42d9-97b0-83145fe1d3a9; viewed="3168129_1374009_26416562_25720141"; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1663900342%2C%22https%3A%2F%2Fgithub.com%2FWendaoLee%2Fdoubansaver%22%5D; _pk_ses.100001.8cb4=*; ap_v=0,6.0; dbcl2="229488397:jnbdYmoHgX4"; ck=NYNZ; push_doumail_num=0; _pk_id.100001.8cb4=e308c8c595b70eaf.1653107776.128.1663900640.1663508262.; push_noty_num=27'
 }
-
-user = ""
-password = ""
-theHost = ""
-
-theServer = zmail.server(user, password, smtp_host=theHost, smtp_port=25, pop_host=theHost,
-                         pop_port=110, pop_ssl=False, pop_tls=False, smtp_ssl=False, smtp_tls=False)
 
 theRequestConn = requests.session()
 
@@ -90,6 +83,8 @@ def getNotification():
     try:
         html = theRequestConn.get(
             url=url, headers=requestsHeaders, cookies=cookie).content
+        with open("./log.html",'w+',encoding='utf-8') as f:
+            f.write(str(html))
         processNotification(html)
     except Exception as e:
         print("["+getTime()+"]"+"error occur when GetNotification")
@@ -98,7 +93,7 @@ def getNotification():
 def sendEmail(mailStruct):
     try:
         print(mailStruct)
-        theServer.send_mail("ava@mail.otterdaily.cn",mailStruct)
+        # theServer.send_mail("ava@mail.otterdaily.cn",mailStruct)
         
     except Exception as e:
         print("["+getTime()+"]"+"error occur when send mail")
@@ -140,13 +135,15 @@ def limitClean():
     timer.start()
 
 
-limitClean()
-sendUrl = ""
-messages = SSEClient(sendUrl)
-for msg in messages:
-    print("["+getTime()+"]"+"检测到新消息")
-    if timeLimit > 10:
-        print("["+getTime()+"]"+"由于次数限制，不作存档。")
-        continue
-    # 其实我应该把它写成链式的，现在确实代码挺丑陋的
+if __name__ == "__main__":
+    print("hello")
     getNotification()
+# sendUrl = ""
+# messages = SSEClient(sendUrl)
+# for msg in messages:
+#     print("["+getTime()+"]"+"检测到新消息")
+#     if timeLimit > 10:
+#         print("["+getTime()+"]"+"由于次数限制，不作存档。")
+#         continue
+#     # 其实我应该把它写成链式的，现在确实代码挺丑陋的
+#     getNotification()

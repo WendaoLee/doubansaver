@@ -1,0 +1,5 @@
+{
+	"sseurl": "https://push.douban.com:4397/sse?channel=notification:user:229488397&auth=229488397_1666662247:9abcb9b18e0e30f8492a446377ba61a6d2120197",
+	"cookie": "ll=\"118172\"; bid=4_9Vn3iZ1pw; __yadk_uid=Ikn5yiZvj0Fr3ZR2EQSX8ZC8G6YrnFRG; douban-fav-remind=1; gr_user_id=12375f91-6d72-42d9-97b0-83145fe1d3a9; viewed=\"3168129_1374009_26416562_25720141\"; push_doumail_num=0; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1666662122%2C%22https%3A%2F%2Fgithub.com%2FWendaoLee%2Fdoubansaver%22%5D; _pk_ses.100001.8cb4=*; ap_v=0,6.0; dbcl2=\"229488397:itFnTnfr6kI\"; ck=d2dJ; push_noty_num=0; _pk_id.100001.8cb4=e308c8c595b70eaf.1653107776.142.1666662243.1666261884.",
+	"database": "sqlite:///C:\\Users\\LeeWe\\Documents\\GitHub\\doubansaver\\Experiment.db"
+}
